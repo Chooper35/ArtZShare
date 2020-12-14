@@ -9,10 +9,11 @@ import NotificationScreen from '../screens/NotificationScreen'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {MaterialCommunityIcons,AntDesign,EvilIcons} from '@expo/vector-icons'
 import HomeScreen from "../screens/HomeScreen";
+import { Entypo } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function MyTabs() {
+export default function MyTabs({navigation}) {
   return (
     <Tab.Navigator initialRouteName={SearchScreen} labeled={false} activeColor="#383C5C" inactiveColor="#fff" barStyle={{ backgroundColor: '#AAA5B8' }} labelStyle={{ fontSize: 12 }}>
        <Tab.Screen
@@ -20,16 +21,24 @@ export default function MyTabs() {
         component={HomeScreen}
         options={{    
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={24} />
+            <MaterialCommunityIcons name="home" color={color} size={24}  />
           ),
         }}
+        
       />
       <Tab.Screen
         name="SearchScreen"
         component={SearchScreen}
         options={{    
           tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" size={24} color={color} />
+            <AntDesign name="search1" size={24} color={color}  />
+          ),
+          headerRight:()=>(
+            <Button
+            onPress={() => alert('This is a button!')}
+            title="Info"
+            color="#fff"
+          />
           ),
         }}
       />

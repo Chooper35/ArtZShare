@@ -35,13 +35,13 @@ export default function ProfileScreen() {
           <View style={styles.folContainer}>
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
-              <Text>Takipci</Text>
-              <Text>55</Text>
+              <Text>Following</Text>
+              <Text>80</Text>
             </View>
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
-              <Text>Takip edilen</Text>
-              <Text>135</Text>
+              <Text>Followers</Text>
+              <Text>100</Text>
             </View>
           </View>
         </View>

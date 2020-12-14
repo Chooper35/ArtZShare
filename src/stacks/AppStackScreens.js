@@ -12,13 +12,13 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from '@react-navigation/drawer';
+} from "@react-navigation/drawer";
 import {
   MaterialCommunityIcons,
   AntDesign,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-export default AppStackScreens = ({navigation}) => {
+export default AppStackScreens = ({ navigation }) => {
   const AppStack = createStackNavigator();
   const [active, setActive] = React.useState("");
   const [visible, setVisible] = React.useState(false);
@@ -38,7 +38,7 @@ export default AppStackScreens = ({navigation}) => {
       <AppStack.Screen
         name="Main"
         component={MainContent}
-        options={{
+        options={({ navigation}) => ({
           headerRight: () => (
             <Provider>
               <View
@@ -49,9 +49,7 @@ export default AppStackScreens = ({navigation}) => {
                   justifyContent: "flex-end",
                 }}
               >
-                <TouchableOpacity
-                 onPress={() => alert("XD")}
-                >
+                <TouchableOpacity onPress={() => alert("Barış BRA")}>
                   <Entypo name="menu" size={30} color="black" />
                 </TouchableOpacity>
               </View>
@@ -59,7 +57,7 @@ export default AppStackScreens = ({navigation}) => {
           ),
 
           title: "ArtZShare",
-        }}
+        })}
       ></AppStack.Screen>
       <AppStack.Screen
         name="PostScreen"

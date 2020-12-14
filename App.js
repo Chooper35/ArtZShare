@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 class App extends Component {
   render() {
     return (
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} >
         <AppStackScreens navigation={this.props.navigation}></AppStackScreens>
       
       </NavigationContainer>

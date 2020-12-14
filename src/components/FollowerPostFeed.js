@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View,FlatList } from "react-native";
 import PostScreen from "../screens/PostScreen";
 import FollowerPost from "./FollowerPost";
+import Post from "./PostBanner";
 
 export default class FollowerPostFeed extends Component {
   _renderPost() {
-    return <PostScreen></PostScreen>;
+    return <Post></Post>;
   }
   _returnKey(item) {
     return item.toString();
