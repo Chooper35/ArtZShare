@@ -26,16 +26,6 @@ export default AppStackScreens = ({ navigation }) => {
   return (
     <AppStack.Navigator headerMode="screen">
       <AppStack.Screen
-        name="Log in"
-        component={AuthStackScreens}
-        options={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: "#DBE0E2",
-          },
-        }}
-      ></AppStack.Screen>
-      <AppStack.Screen
         name="Main"
         component={MainContent}
         options={({ navigation}) => ({

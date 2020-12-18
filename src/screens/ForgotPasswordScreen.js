@@ -10,20 +10,10 @@ import {
 } from "react-native";
 import { TextInput } from 'react-native-paper';
 
-export default class ForgotPasswordScreen extends Component {
-  state = {
-    email: "",
-  };
-  handleEmail = (text) => {
-    this.setState({ email: text });
-  };
 
-  login = (email) => {
-    alert("the code has been sent to your email: " + email);
-  };
-  render() {
-    return (
-      <KeyboardAvoidingView style={styles.container}>
+export default function ForgotPasswordScreen({navigation}) {
+  return (
+    <KeyboardAvoidingView style={styles.container}>
          <ImageBackground
         source={require("../../assets/flowers.jpg")}
         style={styles.image}
@@ -43,12 +33,10 @@ export default class ForgotPasswordScreen extends Component {
           placeholder="Your Email"
           placeholderTextColor="#808080"
           autoCapitalize="none"
-          onChangeText={this.handleEmail}
         />
 
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={() => this.login(this.state.email)}
         >
           <Text style={styles.submitButtonText}> Submit </Text>
         </TouchableOpacity>
@@ -56,8 +44,7 @@ export default class ForgotPasswordScreen extends Component {
         </ImageBackground>
 
       </KeyboardAvoidingView>
-    );
-  }
+  )
 }
 
 const styles = StyleSheet.create({

@@ -12,75 +12,132 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TextInput, Button } from "react-native-paper";
 import SignUp from "./SIGNUP";
+import { AuthContext } from "../components/context";
 
-export default class LOGIN extends Component {
-  state = {
-    userName: "",
-    password: "",
-    loading: false,
+export default function LOGIN({ navigation }) {
+  const [data, setData] = React.useState({
+    userName: "User",
+    password: "Pass",
+    check_textInputChange: false,
+    secureTextEntry: true,
+  });
+
+  const { signIn } = React.useContext(AuthContext);
+
+  const textInputChange = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: true,
+        isValidUser: true,
+      });
+    } else {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: false,
+        isValidUser: false,
+      });
+    }
   };
-  handleUsername = (text) => {
-    this.setState({
-      userName: text,
+
+  const handlePasswordChange = (val) => {
+    if (val.trim().length >= 8) {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: false,
+      });
+    }
+  };
+
+  const updateSecureTextEntry = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry,
     });
   };
-  handlePassword = (text) => {
-    this.setState({
-      password: text,
-    });
+
+  const handleValidUser = (val) => {
+    if (val.trim().length >= 4) {
+      setData({
+        ...data,
+        isValidUser: true,
+      });
+    } else {
+      setData({
+        ...data,
+        isValidUser: false,
+      });
+    }
   };
-  render() {
-    return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+
+  const loginHandle = (userName, password) => {
+    signIn(userName, password);
+  };
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : null}
+    >
+      <ImageBackground
+        source={require("../../assets/flowers.jpg")}
+        style={styles.image}
       >
-        <ImageBackground
-          source={require("../../assets/flowers.jpg")}
-          style={styles.image}
-        >
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>ArtZShare</Text>
-          </View>
-          <View style={styles.loginContainer}>
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Username"
-              onChangeText={this.handleUsername}
-            ></TextInput>
-            <TextInput
-              style={styles.inputStyle}
-              secureTextEntry={true}
-              placeholder="Password"
-              onChangeText={this.handlePassword}
-            ></TextInput>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate("Main")}
-            >
-              <Text style={styles.buttonTextStyle}>Log In</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.bottomContainer}>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate("SignUp")}
-            >
-              <Text style={styles.buttonTextStyle}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate("ForgotPasswordScreen")
-              }
-            >
-              <Text>Forgot your password?</Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </KeyboardAvoidingView>
-    );
-  }
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleStyle}>ArtZShare</Text>
+        </View>
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Username"
+            onChangeText={(val)=>handleValidUser(val)}
+            onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+          ></TextInput>
+          <TextInput
+            style={styles.inputStyle}
+            secureTextEntry={true}
+            placeholder="Password"
+            secureTextEntry={data.secureTextEntry ? true : false}
+            autoCapitalize="none"
+            onChangeText={(val) => handlePasswordChange(val)}
+          ></TextInput>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={() => {
+              loginHandle(data.userName,data.password )
+            }}
+          >
+            <Text style={styles.buttonTextStyle}>Log In</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={()=> navigation.navigate("SignUp")}
+          >
+            <Text style={styles.buttonTextStyle}>Sign Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ForgotPasswordScreen")
+            }
+          >
+            <Text>Forgot your password?</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

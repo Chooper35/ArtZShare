@@ -12,8 +12,11 @@ import {useTheme,
 import {DrawerContentScrollView,DrawerItem} from '@react-navigation/drawer'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as RootNavigation from '../components/RootNavigation'
+import { AuthContext } from '../components/context';
 export default function DrawerContent(props) {
     const paperTheme = useTheme();
+
+    const {signOut} = React.useContext(AuthContext);
 
     return (
         <View style={{flex:1}}>
@@ -108,7 +111,7 @@ export default function DrawerContent(props) {
                     />
                 )}
                 label="Sign Out"
-                onPress={() => alert("Çıkışş yapıyorum")}
+                onPress={() => {signOut()}}
             />
         </Drawer.Section>
     </View>
