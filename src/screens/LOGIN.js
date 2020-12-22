@@ -7,135 +7,93 @@ import {
   Alert,
   KeyboardAvoidingView,
   ImageBackground,
+  ActivityIndicator,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TextInput, Button } from "react-native-paper";
 import SignUp from "./SIGNUP";
 import { AuthContext } from "../components/context";
+import firebase from "firebase";
 
-export default function LOGIN({ navigation }) {
-  const [data, setData] = React.useState({
-    userName: "User",
-    password: "Pass",
-    check_textInputChange: false,
-    secureTextEntry: true,
-  });
-
-  const { signIn } = React.useContext(AuthContext);
-
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: true,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: false,
-        isValidUser: false,
-      });
-    }
+export default class LOGIN extends Component {
+  state = {
+    email: "",
+    password: "",
   };
 
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: true,
+  loginApp = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => {
+        this.props.navigation.navigate("Home");
+      })
+      .catch((err) => {
+        Alert.alert("Oops", "Giriş Yapılamadı. Lütfen tekrar deneyiniz.", [
+          { text: "Tamam" },
+        ]);
       });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
+  };
+  goSignUp = () => {
+    const pushAction = StackActions.push("SignUp");
+
+    this.props.navigation.dispatch(pushAction);
   };
 
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
 
-  const handleValidUser = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidUser: false,
-      });
-    }
-  };
-
-  const loginHandle = (userName, password) => {
-    signIn(userName, password);
-  };
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : null}
-    >
-      <ImageBackground
-        source={require("../../assets/flowers.jpg")}
-        style={styles.image}
+  render() {
+    return (
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : null}
       >
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleStyle}>ArtZShare</Text>
-        </View>
-        <View style={styles.loginContainer}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Username"
-            onChangeText={(val)=>handleValidUser(val)}
-            onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-          ></TextInput>
-          <TextInput
-            style={styles.inputStyle}
-            secureTextEntry={true}
-            placeholder="Password"
-            secureTextEntry={data.secureTextEntry ? true : false}
-            autoCapitalize="none"
-            onChangeText={(val) => handlePasswordChange(val)}
-          ></TextInput>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={() => {
-              loginHandle(data.userName,data.password )
-            }}
-          >
-            <Text style={styles.buttonTextStyle}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bottomContainer}>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={()=> navigation.navigate("SignUp")}
-          >
-            <Text style={styles.buttonTextStyle}>Sign Up</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("ForgotPasswordScreen")
-            }
-          >
-            <Text>Forgot your password?</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
-  );
+        <ImageBackground
+          source={require("../../assets/flowers.jpg")}
+          style={styles.image}
+        >
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleStyle}>ArtZShare</Text>
+          </View>
+          <View style={styles.loginContainer}>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Email"
+              onChangeText={(email) => this.setState({ email: email })}
+              value={this.state.email}
+              keyboardType="email-address"
+            ></TextInput>
+            <TextInput
+              style={styles.inputStyle}
+              secureTextEntry={true}
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={(password) => this.setState({ password: password })}
+            ></TextInput>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={() => this.loginApp()}
+            >
+              <Text style={styles.buttonTextStyle}>Log In</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.bottomContainer}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={() => this.goSignUp()}
+            >
+              <Text style={styles.buttonTextStyle}>Sign Up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("ForgotPass")}
+            >
+              <Text>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </KeyboardAvoidingView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

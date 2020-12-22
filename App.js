@@ -1,4 +1,5 @@
-import "react-native-gesture-handler";
+import * as firebase from "firebase";
+import config from "./firebase";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -22,128 +23,32 @@ import { Component } from "react";
 import AppStackScreens from "./src/stacks/AppStackScreens";
 import AuthStackScreens from "./src/stacks/AuthStackScreens";
 import MainContent from "./src/components/MainContent";
+import LOGIN from "./src/screens/LOGIN";
+import SIGNUP from "./src/screens/SIGNUP";
+import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setUserToken] = React.useState(null);
-
-  const initialLoginState = {
-    isLoading: true,
-    userName: null,
-    userToken: null,
-  };
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case "RETRIEVE_TOKEN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGIN":
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGOUT":
-        return {
-          ...prevState,
-          userName: null,
-          userToken: null,
-          isLoading: false,
-        };
-      case "REGISTER":
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-    }
-  };
-
-  const [loginState, dispatch] = React.useReducer(
-    loginReducer,
-    initialLoginState
-  );
-
-  const authContext = React.useMemo(
-    () => ({
-      signIn: async (userName, password) => {
-        // setUserToken('asd');
-        // setIsLoading(false);
-        let userToken;
-        userToken = null;
-        if (userName == "User" && password == "Pass") {
-          try {
-            userToken = "dfgdfg";
-            await AsyncStorage.setItem("userToken", userToken);
-            console.log("usertoken sign in :" + userToken);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        console.log("user token: ", userToken);
-        dispatch({ type: "LOGIN", id: userName, token: userToken });
-      },
-      signOut: async () => {
-        //setUserToken(null);
-        //  setIsLoading(false);
-        try {
-          await AsyncStorage.removeItem("userToken");
-        } catch (e) {
-          console.log(e);
-        }
-        dispatch({ type: "LOGOUT" });
-      },
-      signUp: () => {
-        setUserToken("asd");
-        setIsLoading(false);
-      },
-    }),
-    []
-  );
-
-  useEffect(() => {
-    setTimeout(async () => {
-      let userToken;
-      userToken = null;
-      try {
-        userToken = await AsyncStorage.getItem("userToken");
-        console.log("Getitem" + userToken);
-      } catch (e) {
-        console.log(e);
-      }
-      dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
-    }, 1000);
-  }, []);
-
-  if (loginState.isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator
-          animating={true}
-          color={Colors.purple300}
-          size="large"
-        />
-      </View>
-    );
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  } else {
+    firebase.app(config);
   }
+
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {loginState.userToken != null ? (
-          <AppStackScreens></AppStackScreens>
-        ) : (
-          <AuthStackScreens></AuthStackScreens>
-        )}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator headerMode="screen">
+        <Stack.Screen name="Login" component={LOGIN}></Stack.Screen>
+        <Stack.Screen name="SignUp" component={SIGNUP}></Stack.Screen>
+        <Stack.Screen
+          name="ForgotPass"
+          component={ForgotPasswordScreen}
+        ></Stack.Screen>
+        <Stack.Screen name="Home" component={MainContent}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
