@@ -36,17 +36,17 @@ export default function App() {
   } else {
     firebase.app(config);
   }
-
+  
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="screen">
+      <Stack.Navigator headerMode="none">
         <Stack.Screen name="Login" component={LOGIN}></Stack.Screen>
         <Stack.Screen name="SignUp" component={SIGNUP}></Stack.Screen>
         <Stack.Screen
           name="ForgotPass"
           component={ForgotPasswordScreen}
         ></Stack.Screen>
-        <Stack.Screen name="Home" component={MainContent}></Stack.Screen>
+        <Stack.Screen name="AppStack" component={AppStackScreens}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

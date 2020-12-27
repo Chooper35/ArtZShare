@@ -24,6 +24,10 @@ export default class SIGNUP extends Component {
     userName: "",
     email: "",
     password: "",
+    photoURL:"",
+    pInfo:"",
+    follower:0,
+    follows:0,
     login: false,
   };
 
@@ -33,13 +37,12 @@ export default class SIGNUP extends Component {
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((auth) => {
         let uid = auth.user.uid;
-        this.createUser(uid);
+        this.createUser(uid); 
       })
       .catch((err) => {
-        Alert.alert("Hoppala hemşerim", "Kayıt olamadın tekrar dene koç", [
-          { text: "Tamam abi" },
-          console.log(err),
-        ]);
+        alert("Kayıt olunamadı.");
+        console.log(err);
+      
       });
   };
   createUser = (uid) => {
@@ -49,6 +52,10 @@ export default class SIGNUP extends Component {
       name: this.state.name,
       userName: this.state.userName,
       password: this.state.password,
+      photoURL:"",
+      pInfo:"",
+      follower:0,
+      follows:0,
     });
   };
 

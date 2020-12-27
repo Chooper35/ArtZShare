@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useLayoutEffect, useState } from "react";
 import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
 import PostFeed from "../components/PostFeed";
 import {
@@ -8,25 +8,54 @@ import {
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Menu, Divider, Provider } from "react-native-paper";
+import * as firebase from "firebase";
+
 
 export default function ProfileScreen() {
-  const [active, setActive] = React.useState("");
-  const [visible, setVisible] = React.useState(false);
+  var userId = firebase.auth().currentUser.uid;
+  var [username, setUsername] = useState("");
+  var [name, setName] = useState("");
+  var [pInfo, setpInfo] = useState("");
+  var [photoURL, setPhotoURL] = useState("");
+  var [followers, setFollower] = useState(0);
+  var [follows, setFollows] = useState(0);
 
-  const openMenu = () => setVisible(true);
+  useEffect(() => {
+    firebase
+      .database()
+      .ref("/users/" + userId)
+      .once("value")
+      .then((snapshot) => {
+        console.log("Snapshot ++ ", snapshot.val());
+        username = (snapshot.val() && snapshot.val().userName) || "Anonymous";
+        name = (snapshot.val() && snapshot.val().name) || "Anonymous";
+        pInfo = (snapshot.val() && snapshot.val().pInfo) || "Açıklama";
+        photoURL = (snapshot.val() && snapshot.val().photoURL) || "Anonymous";
+        followers = (snapshot.val() && snapshot.val().follower) || 0;
+        follows = (snapshot.val() && snapshot.val().follows) || 0;
+        setUsername(username);
+        setName(name);
+        setpInfo(pInfo);
+        setPhotoURL(photoURL);
+        setFollower(followers);
+        setFollows(follows);
+      });
+  }, []);
 
-  const closeMenu = () => setVisible(false);
+
   return (
     <View style={styles.container}>
-      
       <View style={styles.topContainer}>
         <View style={styles.picContainer}>
-          <Image
-            style={styles.profilePic}
-            source={require("../../assets/image2.jpg")}
-          ></Image>
-          <Text>Ayberk Düzova</Text>
-          <Text>@ayberkdzv</Text>
+          <TouchableOpacity>
+            <Image
+              style={styles.profilePic}
+              source={require("../../assets/profile.png")}
+            ></Image>
+          </TouchableOpacity>
+
+          <Text>{name}</Text>
+          <Text>&#64;{username}</Text>
 
           <TouchableOpacity style={styles.followButton}>
             <SimpleLineIcons name="user-follow" size={25} color="black" />
@@ -36,12 +65,12 @@ export default function ProfileScreen() {
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
               <Text>Following</Text>
-              <Text>80</Text>
+              <Text>{follows}</Text>
             </View>
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
               <Text>Followers</Text>
-              <Text>100</Text>
+              <Text>{followers}</Text>
             </View>
           </View>
         </View>
@@ -56,9 +85,7 @@ export default function ProfileScreen() {
         />
         <View>
           <Text style={styles.article}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mi
-            mi, commodo eget dolor sed, gravida porttitor tellus. Vestibulum
-            molestie semper orci. Etiam ut pulvinar dolor, nec imperdiet tellus.
+           {pInfo}
           </Text>
         </View>
         <View
@@ -72,7 +99,6 @@ export default function ProfileScreen() {
         />
       </View>
       <PostFeed></PostFeed>
-  
     </View>
   );
 }
