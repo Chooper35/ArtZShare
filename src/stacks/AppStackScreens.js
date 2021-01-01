@@ -18,13 +18,15 @@ import {
   AntDesign,
   SimpleLineIcons,
 } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
 export default AppStackScreens = ({ navigation }) => {
   const AppStack = createStackNavigator();
   const [active, setActive] = React.useState("");
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <AppStack.Navigator headerMode="screen">
+    
+      <AppStack.Navigator headerMode="screen">
       <AppStack.Screen
         name="Main"
         component={MainContent}
@@ -54,5 +56,8 @@ export default AppStackScreens = ({ navigation }) => {
         component={PostScreen}
       ></AppStack.Screen>
     </AppStack.Navigator>
+
+ 
+    
   );
 };

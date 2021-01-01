@@ -31,7 +31,6 @@ export default function DrawerContent(props) {
       .ref("/users/" + userId)
       .once("value")
       .then((snapshot) => {
-        console.log("Snapshot ++ ", snapshot.val());
         username = (snapshot.val() && snapshot.val().userName) || "Anonymous";
         name = (snapshot.val() && snapshot.val().name) || "Anonymous";
         pInfo = (snapshot.val() && snapshot.val().pInfo) || "Açıklama";
@@ -79,13 +78,13 @@ export default function DrawerContent(props) {
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {follows}
                 </Paragraph>
-                <Caption style={styles.caption}>Following</Caption>
+                <Caption style={styles.caption}>Takip edilenler</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {followers}
                 </Paragraph>
-                <Caption style={styles.caption}>Followers</Caption>
+                <Caption style={styles.caption}>Takipçiler</Caption>
               </View>
             </View>
           </View>
@@ -95,7 +94,7 @@ export default function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="home-outline" color={color} size={size} />
               )}
-              label="Home"
+              label="Ana Ekran"
               onPress={() => {
                 props.navigation.navigate("HomeScreen");
               }}
@@ -104,7 +103,7 @@ export default function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
-              label="Profile"
+              label="Profil"
               onPress={() => {
                 props.navigation.navigate("Profile");
               }}
@@ -113,7 +112,7 @@ export default function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="bell-outline" color={color} size={size} />
               )}
-              label="Notifications"
+              label="Bildirimler"
               onPress={() => {
                 props.navigation.navigate("Notification");
               }}
@@ -122,7 +121,8 @@ export default function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="settings-outline" color={color} size={size} />
               )}
-              label="Settings"
+              label="Ayarlar"
+              props={props}
               onPress={() => {
                 props.navigation.navigate("Settings");
               }}
@@ -135,7 +135,7 @@ export default function DrawerContent(props) {
           icon={({ color, size }) => (
             <Icon name="exit-to-app" color={color} size={size} />
           )}
-          label="Sign Out"
+          label="Çıkış Yap"
           onPress={() => signO()}
         />
       </Drawer.Section>
