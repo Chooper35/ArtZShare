@@ -6,22 +6,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import PostScreen from "../screens/PostScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import DrawerContent from "../screens/DrawerContent";
-import ProfileUpdateScreen from "../screens/ProfileUpdateScreen";
+import UpdateProfile from "../screens/UpdateProfile";
 
 const Drawer = createDrawerNavigator();
 
 export default function MainContent({ navigation }, props) {
-  console.log(JSON.stringify(props));
+  
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={MyTabs} {...props} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
-      <Drawer.Screen name="UpdateProfile" component={ProfileUpdateScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
+      <Drawer.Screen name="UpdateProfile" component={UpdateProfile}  {...props}/>
     </Drawer.Navigator>
   );
+  
 }
 
 const styles = StyleSheet.create({});

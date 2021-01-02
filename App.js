@@ -51,31 +51,6 @@ export default function App() {
           name="ForgotPass"
           component={ForgotPasswordScreen}
         ></Stack.Screen>
-         {/* <Stack.Screen
-        name="Main"
-        
-        component={MainContent}
-        options={({ navigation}) => ({
-          headerRight: () => (
-            <Provider>
-              <View
-                style={{
-                  marginTop: 15,
-                  marginRight: 30,
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <TouchableOpacity onPress={ () => navigation.dispatch(DrawerActions.toggleDrawer())}>
-                  <Entypo name="menu" size={30} color="black" />
-                </TouchableOpacity>
-              </View>
-            </Provider>
-          ),
-
-          title: "ArtZShare",
-        })}
-      ></Stack.Screen> */}
       <Stack.Screen name="Main" options={({ navigation}) => ({
           headerRight: () => (
             <Provider>
