@@ -5,6 +5,9 @@ import CommentFeed from "../components/CommentFeed";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 
 export default class PostScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <View style={styles.container}>

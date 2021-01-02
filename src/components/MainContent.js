@@ -11,17 +11,16 @@ import ProfileUpdateScreen from "../screens/ProfileUpdateScreen";
 const Drawer = createDrawerNavigator();
 
 export default function MainContent({ navigation }, props) {
+  console.log(JSON.stringify(props));
   return (
-   
-      <Drawer.Navigator
-        drawerContent={(props) => <DrawerContent {...props} />}
-        initialRouteName="Home"
-      >
-        <Drawer.Screen name="Home" component={MyTabs} />
-        <Drawer.Screen name="Settings" component={SettingsScreen} />
-        <Drawer.Screen name="UpdateProfile" component={ProfileUpdateScreen} />
-      </Drawer.Navigator>
-  
+    <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
+      initialRouteName="Home"
+    >
+      <Drawer.Screen name="Home" component={MyTabs} {...props} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="UpdateProfile" component={ProfileUpdateScreen} />
+    </Drawer.Navigator>
   );
 }
 

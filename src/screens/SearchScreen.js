@@ -5,6 +5,9 @@ import PostFeed from "../components/PostFeed";
 import TagContainer from "../components/TagContainer";
 
 export default class HomeScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>

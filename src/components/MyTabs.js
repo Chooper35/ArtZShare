@@ -14,6 +14,8 @@ import { Entypo } from "@expo/vector-icons";
 const Tab = createMaterialBottomTabNavigator();
 
 export default function MyTabs({navigation}) {
+
+
   return (
     <Tab.Navigator initialRouteName={SearchScreen} labeled={false} activeColor="#383C5C" inactiveColor="#fff" barStyle={{ backgroundColor: '#AAA5B8' }} labelStyle={{ fontSize: 12 }}>
        <Tab.Screen

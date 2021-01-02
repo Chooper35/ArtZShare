@@ -5,10 +5,10 @@ import { Button,Divider ,Switch } from 'react-native-paper'
 import * as RootNavigation from '../components/RootNavigation'
 import UpdateProfile from '../screens/ProfileUpdateScreen'
 
-export default function SettingsScreen({navigation}) {
+export default function SettingsScreen({navigation},props) {
     return (
         <ScrollView>
-            <Button onPress={ () => this.props.navigation.navigate("UpdateProfile") } >Bilgilerini güncelle</Button>
+            <Button onPress={ () => console.log("Setting props == " + JSON.stringify(props) ) } >Bilgilerini güncelle</Button>
             <Divider></Divider>
             
             

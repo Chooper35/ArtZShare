@@ -17,6 +17,9 @@ import { AuthContext } from "../components/context";
 import firebase from "firebase";
 
 export default class LOGIN extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     email: "",
     password: "",
@@ -26,7 +29,7 @@ export default class LOGIN extends Component {
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged((auth) => {
       if (auth) {
-        this.props.navigation.navigate("AppStack");
+        this.props.navigation.navigate("Main");
       } else {
         this.setState({ loading: false });
       }
@@ -42,7 +45,7 @@ export default class LOGIN extends Component {
       .then(() => {
         alert("Giriş Başarılı");
 
-        this.props.navigation.navigate("AppStack");
+        this.props.navigation.navigate("Main");
       })
       .catch((err) => {
         this.setState({ loading: false });

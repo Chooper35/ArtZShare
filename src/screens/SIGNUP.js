@@ -19,6 +19,9 @@ import firebase from "firebase";
 import config from "../../firebase"
 
 export default class SIGNUP extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     name: "",
     userName: "",
