@@ -31,8 +31,9 @@
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.2.1",
-    "firebase": "7.8.0"
-
+    "firebase": "^8.2.1",
+    "expo-image-picker": "~9.1.1",
+    "expo-constants": "~9.2.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

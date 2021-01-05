@@ -28,29 +28,26 @@ export default class UpdateProfile extends Component {
           placeholder="Name"
           autoCapitalize="none"
           placeholderTextColor="#808080"
-          value={this.state.name}
-          onChangeText={(name) => this.setState({ name: name })}
+    
         ></TextInput>
         <TextInput
           style={styles.textInput}
           placeholder="Username"
           autoCapitalize="none"
           placeholderTextColor="#808080"
-          value={this.state.userName}
-          onChangeText={(userName) => this.setState({ userName: userName })}
+      
         ></TextInput>
         <TextInput
           style={styles.textInput}
           placeholder="Info"
           autoCapitalize="none"
           placeholderTextColor="#808080"
-          value={this.state.pInfo}
-          onChangeText={(pInfo) => this.setState({ pInfo: pInfo })}
+         
         ></TextInput>
         <Button
           title="Update"
           color="#841584"
-          onPress={() => this.updateUser()}
+         
         />
       </View>
     );
