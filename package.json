@@ -34,6 +34,10 @@
     "react-native-web": "~0.13.12",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "styled-components": "^5.2.1",
+<<<<<<< HEAD
+=======
+    "firebase": "^8.2.1",
+>>>>>>> 2fc0cafa49da1ab85b159e953f2f3895ac1054cd
     "expo-image-picker": "~9.1.1",
     "expo-constants": "~9.2.0"
   },
