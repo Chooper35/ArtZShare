@@ -24,6 +24,7 @@ export default function DrawerContent(props) {
   var [photoURL, setPhotoURL] = useState("");
   var [followers, setFollower] = useState(0);
   var [follows, setFollows] = useState(0);
+  var [count,setCount]= useState(0);
 
   useEffect(() => {
     firebase
@@ -43,8 +44,12 @@ export default function DrawerContent(props) {
         setPhotoURL(photoURL);
         setFollower(followers);
         setFollows(follows);
-      });
-  }, []);
+      }).then(function(){
+        firebase.auth().currentUser.reload()
+      }).catch(function(err){
+        console.log(err);
+      })
+  }, [count]);
   function signO() {
     firebase
       .auth()
@@ -97,6 +102,7 @@ export default function DrawerContent(props) {
               label="Ana Ekran"
               onPress={() => {
                 props.navigation.navigate("HomeScreen");
+                setCount(count + 1);
               }}
             />
             <DrawerItem
@@ -106,6 +112,7 @@ export default function DrawerContent(props) {
               label="Profil"
               onPress={() => {
                 props.navigation.navigate("Profile");
+                setCount(count + 1);
               }}
             />
             <DrawerItem

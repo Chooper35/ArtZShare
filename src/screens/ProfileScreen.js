@@ -19,8 +19,10 @@ export default function ProfileScreen() {
   var [photoURL, setPhotoURL] = useState("");
   var [followers, setFollower] = useState(0);
   var [follows, setFollows] = useState(0);
+  var [index,setIndex] = useState(0);
 
   useEffect(() => {
+   
     firebase
       .database()
       .ref("/users/" + userId)
@@ -39,8 +41,13 @@ export default function ProfileScreen() {
         setPhotoURL(photoURL);
         setFollower(followers);
         setFollows(follows);
-      });
-  }, []);
+      }).then(function(){
+        firebase.auth().currentUser.reload()
+        console.log("İndex"+index);
+      }).catch(function(err){
+        console.log(err);
+      })
+  }, [index]);
 
 
   return (
@@ -50,7 +57,7 @@ export default function ProfileScreen() {
           <TouchableOpacity>
             <Image
               style={styles.profilePic}
-              source={require("../../assets/profile.png")}
+              source={{uri:photoURL}}
             ></Image>
           </TouchableOpacity>
 
@@ -58,8 +65,8 @@ export default function ProfileScreen() {
           <Text>&#64;{username}</Text>
 
           <TouchableOpacity style={styles.followButton}>
-            <SimpleLineIcons name="user-follow" size={25} color="black" />
-            <Text>Follow</Text>
+            <SimpleLineIcons name="user-follow" size={25} color="black" onPress={()=>setIndex(index + 1)}/>
+            <Text>Yenile</Text>
           </TouchableOpacity>
           <View style={styles.folContainer}>
             <View style={styles.littleFolContainer}>

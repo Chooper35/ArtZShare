@@ -65,6 +65,7 @@ export default function App() {
                 <TouchableOpacity onPress={ () => navigation.dispatch(DrawerActions.toggleDrawer())}>
                   <Entypo name="menu" size={30} color="black" />
                 </TouchableOpacity>
+              
               </View>
             </Provider>
           ),
