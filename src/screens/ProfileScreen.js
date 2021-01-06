@@ -22,7 +22,7 @@ export default function ProfileScreen() {
   var [index,setIndex] = useState(0);
 
   useEffect(() => {
-   
+    firebase.auth().currentUser.reload(),
     firebase
       .database()
       .ref("/users/" + userId)

@@ -9,15 +9,18 @@ import Constants from "expo-constants";
 import { Platform } from "react-native";
 import * as firebase from "firebase";
 
-export default function UploadScreen() {
-  const [image, setImage] = useState(null);
-  const [title,setTitle] = useState("");
-  const [Info,setInfo] = useState("");
-  const [likes,setLike] = useState(0);
-  const [comments,setComments] = useState(null);
-
-
-  useEffect(() => {
+export default class UploadScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+  state = {
+    image: null,
+    title: "",
+    Info: "",
+    likes: 0,
+    comments: null,
+  };
+  componentDidMount() {
     async () => {
       if (Platform.OS !== "web") {
         const {
@@ -28,9 +31,8 @@ export default function UploadScreen() {
         }
       }
     };
-  }, []);
-
-  const pickImage = async () => {
+  }
+  pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -40,51 +42,55 @@ export default function UploadScreen() {
     console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
-      console.log("image"+ image);
+      this.setState({
+        image: result.uri,
+      });
+      console.log("image" + this.state.image);
     }
   };
-
-  const createPost = () =>{
-    var userId=firebase.auth().currentUser.uid;
+  createPost = () => {
+    var userId = firebase.auth().currentUser.uid;
+    var newPostKey=firebase.database().ref().child("posts").push().key;
     console.log("ID" + userId);
-    firebase.database().ref("posts").child(userId).set({
-      userId:userId,
-      title:title,
-      likes:likes,    
-      comments:comments, 
-      Info:Info,
-      postTime:firebase.database.ServerValue.TIMESTAMP,
-    })
-    
-      
-      
-  }
-
-
-  if (image == null) {
+    firebase
+      .database()
+      .ref("posts")
+      .child(newPostKey)
+      .set({
+        userId: userId,
+        title: this.state.title,
+        likes: this.state.likes,
+        image: this.state.image,
+        comments: this.state.comments,
+        Info: this.state.Info,
+        postTime: firebase.database.ServerValue.TIMESTAMP,
+      })
+      .then(function () {
+        alert("Post başarıyla paylaşıldı.");
+      });
+  };
+  render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={pickImage}>
+        <TouchableOpacity onPress={this.pickImage}>
           <Image
             style={styles.ImageContainer}
-            source={require("../../assets/plus.png")}
+            source={{ uri: this.state.image }}
           ></Image>
         </TouchableOpacity>
-        <TextInput style={styles.Input} placeholder="Başlık"></TextInput>
-        <TextInput style={styles.Input} placeholder="Açıklama"></TextInput>
-        <Button title="Paylaş"  onPress={()=> createPost()}></Button>
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={pickImage}>
-          <Image style={styles.ImageContainer} source={{ uri: image }}></Image>
-        </TouchableOpacity>
-        <TextInput style={styles.Input} placeholder="Başlık"></TextInput>
-        <TextInput style={styles.Input} placeholder="Açıklama"></TextInput>
-        <Button title="Paylaş"></Button>
+        <TextInput
+          style={styles.Input}
+          placeholder="Başlık"
+          onChangeText={(title) => this.setState({ title: title })}
+          value={this.state.name}
+        ></TextInput>
+        <TextInput
+          style={styles.Input}
+          placeholder="Açıklama"
+          onChangeText={(Info) => this.setState({ Info: Info })}
+          value={this.state.name}
+        ></TextInput>
+        <Button title="Paylaş" onPress={() => this.createPost()}></Button>
       </View>
     );
   }

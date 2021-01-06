@@ -69,7 +69,7 @@ export default function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
-                source={require("../../assets/image2.jpg")}
+                source={{uri:photoURL}}
                 size={50}
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
