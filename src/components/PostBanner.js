@@ -4,52 +4,54 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Text, StyleSheet, View, Image, Button } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {useNavigation} from '@react-navigation/native';
-import * as RootNavigation from '../components/RootNavigation'
-
-
+import { useNavigation } from "@react-navigation/native";
+import * as RootNavigation from "../components/RootNavigation";
 
 export default class Post extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     imageURL: "asd",
     profilePURL: "ProfilePic",
     kullaniciAdi: "@ayberkdzv",
     begeniSayisi: 1,
   };
+
+  showData = () => {
+    console.log("Data ===" + this.props.data);
+  };
   render() {
     return (
-      <View style={styles.container} >
-        <TouchableOpacity
-        onPress={ () => RootNavigation.navigate("PostScreen")} >
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.photo}
-            source={require("../../assets/bottas.jpg")}
-          />
-        </View>
-        <View
-          style={{
-            margin: 5,
-            borderBottomColor: "black",
-            borderBottomWidth: 1,
-          }}
-        />
-
-        <View style={styles.userContainer}>
-          <Image
-            source={require("../../assets/image2.jpg")}
-            style={styles.profilePic}
-          ></Image>
-
-          <Text style={styles.userName}>{this.state.kullaniciAdi}</Text>
-          <View style={styles.likeContainer}>
-            <Text style={styles.likeCount}>{this.state.begeniSayisi}</Text>
-            <AntDesign name="heart" size={15} color="black" />
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.showData()}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.photo}
+              source={require("../../assets/bottas.jpg")}
+            />
           </View>
-        </View>
+          <View
+            style={{
+              margin: 5,
+              borderBottomColor: "black",
+              borderBottomWidth: 1,
+            }}
+          />
 
+          <View style={styles.userContainer}>
+            <Image
+              source={require("../../assets/image2.jpg")}
+              style={styles.profilePic}
+            ></Image>
+
+            <Text style={styles.userName}>{this.state.kullaniciAdi}</Text>
+            <View style={styles.likeContainer}>
+              <Text style={styles.likeCount}>{this.state.begeniSayisi}</Text>
+              <AntDesign name="heart" size={15} color="black" />
+            </View>
+          </View>
         </TouchableOpacity>
-        
       </View>
     );
   }
@@ -67,11 +69,11 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
   },
-  likeContainer:{
-    flexDirection:"row",
-    paddingHorizontal:20,
-    alignItems:"baseline",
-    justifyContent:"space-evenly",
+  likeContainer: {
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    alignItems: "baseline",
+    justifyContent: "space-evenly",
   },
   photo: {
     margin: 5,
@@ -85,8 +87,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 10,
   },
-  likeCount:{
-    fontSize:13,
+  likeCount: {
+    fontSize: 13,
   },
   userName: {
     marginLeft: 5,
