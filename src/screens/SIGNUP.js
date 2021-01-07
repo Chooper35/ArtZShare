@@ -41,6 +41,7 @@ export default class SIGNUP extends Component {
       .then((auth) => {
         let uid = auth.user.uid;
         this.createUser(uid); 
+        alert("Başarıyla kayıt olundu.")
       })
       .catch((err) => {
         alert("Kayıt olunamadı.");

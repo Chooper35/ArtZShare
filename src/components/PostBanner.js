@@ -39,6 +39,8 @@ export default class Post extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={()=> {
           RootNavigation.navigate("PostScreen",{
+            profileURL:this.state.profileURL,
+            userName:this.state.userName,
             userId: this.props.userId,
             Info:this.props.Info,
             title:this.props.title,

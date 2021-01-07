@@ -3,23 +3,24 @@ import { Text, StyleSheet, View, Image, Button } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CommentFeed from "../components/CommentFeed";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import * as firebase from "firebase";
+import moment from 'moment';
 
 export default class PostScreen extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    console.log("Props" + JSON.stringify(this.props.route.params.userId));
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.userContainer}>
           <Image
-            source={require("../../assets/image2.jpg")}
+            source={{uri:this.props.route.params.profileURL}}
             style={styles.profilePic}
           ></Image>
 
-          <Text style={styles.userName}>@ayberkodzv</Text>
-          <Text style={styles.userName}></Text>
+          <Text style={styles.userName}>{this.props.route.params.userName}</Text>
+          <Text style={styles.userName}>{moment(this.props.route.params.time).fromNow()}</Text>
           <View style={styles.likeContainer}>
             <Text style={styles.likeCount}>{this.props.route.params.like}</Text>
             <AntDesign name="heart" size={20} color="black" />
@@ -35,12 +36,21 @@ export default class PostScreen extends Component {
         <View style={styles.imageContainer}>
           <Image
             style={styles.photo}
-            source={{uri:this.props.route.params.image}}
+            source={{ uri: this.props.route.params.image }}
           />
         </View>
-     
+        <View>
+          <Text>{this.props.route.params.title}</Text>
+          <View
+          style={{
+            margin: 5,
+            borderBottomColor: "black",
+            borderBottomWidth: 1,
+          }}
+        />
+          <Text>{this.props.route.params.Info}</Text>
+        </View>
 
-        
         <View
           style={{
             margin: 5,
@@ -51,7 +61,7 @@ export default class PostScreen extends Component {
         <View>
           <CommentFeed></CommentFeed>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -74,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
   },
   photo: {
-    alignContent:"center",
+    alignContent: "center",
     margin: 5,
     width: 400,
     height: 400,

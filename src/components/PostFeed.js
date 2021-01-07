@@ -29,6 +29,7 @@ export default class PostFeed extends Component {
           isLoading:false,
           length:length,
         });
+        console.log(JSON.stringify(this.state.dataSource));
       });
   }
 

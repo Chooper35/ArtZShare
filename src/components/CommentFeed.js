@@ -19,15 +19,6 @@ const DATA = [
   {
     id: "58694a0f-3da1-47s1f-bd96-14557s1cce29d72",
   },
-  {
-    id: "58694a0f-3da1-47a1f-bd96-14557s1cce29d72",
-  },
-  {
-    id: "58694a0f-3da1-47c1f-bd96-14557s1cce29d72",
-  },
-  {
-    id: "58694a0f-3da1-47d1f-bd96-14557s1cce29d72",
-  },
 ];
 
 export default function CommentFeed() {
@@ -49,7 +40,7 @@ export default function CommentFeed() {
 
 const styles = StyleSheet.create({
   container: {  
-    backgroundColor: "#caf0f8",
+    backgroundColor: "#F5F0F6",
   },
   titleFont: {
     margin: 10,

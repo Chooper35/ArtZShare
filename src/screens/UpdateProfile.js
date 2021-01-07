@@ -13,6 +13,7 @@ import * as firebase from "firebase";
 //import ImagePicker from 'react-native-image-picker';
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default class UpdateProfile extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ export default class UpdateProfile extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={{ alignItems: "center" }}>
           <View
             style={{
@@ -89,15 +90,17 @@ export default class UpdateProfile extends Component {
                   justifyContent: "center",
                 }}
               >
-                <Button
-                  title="Pick an image from camera roll"
-                  onPress={this.pickImage}
-                />
+                
                 <Image
                   source={{ uri: this.state.photoURL }}
                   style={{ width: 200, height: 200 }}
                 />
+               
               </View>
+              <Button
+                  title="Pick an image from camera roll"
+                  onPress={this.pickImage}
+                />
             </View>
           </View>
         </View>
@@ -135,7 +138,7 @@ export default class UpdateProfile extends Component {
         >
           <Text style={styles.panelButtonTitle}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }

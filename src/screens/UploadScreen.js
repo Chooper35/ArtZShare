@@ -50,7 +50,7 @@ export default class UploadScreen extends Component {
   };
   createPost = () => {
     var userId = firebase.auth().currentUser.uid;
-    var newPostKey=firebase.database().ref().child("posts").push().key;
+    var newPostKey = firebase.database().ref().child("posts").push().key;
     console.log("ID" + userId);
     firebase
       .database()
@@ -70,29 +70,55 @@ export default class UploadScreen extends Component {
       });
   };
   render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.pickImage}>
-          <Image
-            style={styles.ImageContainer}
-            source={{ uri: this.state.image }}
-          ></Image>
-        </TouchableOpacity>
-        <TextInput
-          style={styles.Input}
-          placeholder="Başlık"
-          onChangeText={(title) => this.setState({ title: title })}
-          value={this.state.name}
-        ></TextInput>
-        <TextInput
-          style={styles.Input}
-          placeholder="Açıklama"
-          onChangeText={(Info) => this.setState({ Info: Info })}
-          value={this.state.name}
-        ></TextInput>
-        <Button title="Paylaş" onPress={() => this.createPost()}></Button>
-      </View>
-    );
+    if (this.state.image == null) {
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.pickImage}>
+            <Image
+              style={styles.ImageContainer}
+              source={require("../../assets/plus.png")}
+            ></Image>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.Input}
+            placeholder="Başlık"
+            onChangeText={(title) => this.setState({ title: title })}
+            value={this.state.name}
+          ></TextInput>
+          <TextInput
+            style={styles.Input}
+            placeholder="Açıklama"
+            onChangeText={(Info) => this.setState({ Info: Info })}
+            value={this.state.name}
+          ></TextInput>
+          <Button title="Paylaş" onPress={() => this.createPost()}></Button>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.pickImage}>
+            <Image
+              style={styles.ImageContainer}
+              source={{ uri: this.state.image }}
+            ></Image>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.Input}
+            placeholder="Başlık"
+            onChangeText={(title) => this.setState({ title: title })}
+            value={this.state.name}
+          ></TextInput>
+          <TextInput
+            style={styles.Input}
+            placeholder="Açıklama"
+            onChangeText={(Info) => this.setState({ Info: Info })}
+            value={this.state.name}
+          ></TextInput>
+          <Button title="Paylaş" onPress={() => this.createPost()}></Button>
+        </View>
+      );
+    }
   }
 }
 

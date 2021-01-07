@@ -10,7 +10,7 @@ export default function Comment() {
         source={require("../../assets/image2.jpg")}
         style={styles.profilePic}
       ></Image>
-      <Text>Bruh moments comentostas</Text>
+      <Text>Yorum yorum</Text>
      
       </View>
      
