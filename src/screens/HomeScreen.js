@@ -11,7 +11,7 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <PostScreen></PostScreen>
+                <Text>HomeScreen</Text>
             </View>
         )
     }

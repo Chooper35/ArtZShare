@@ -9,6 +9,7 @@ export default class PostScreen extends Component {
     super(props);
   }
   render() {
+    console.log("Props" + JSON.stringify(this.props.route.params.userId));
     return (
       <View style={styles.container}>
         <View style={styles.userContainer}>
@@ -17,9 +18,10 @@ export default class PostScreen extends Component {
             style={styles.profilePic}
           ></Image>
 
-          <Text style={styles.userName}>@ayberkdzv</Text>
+          <Text style={styles.userName}>@ayberkodzv</Text>
+          <Text style={styles.userName}></Text>
           <View style={styles.likeContainer}>
-            <Text style={styles.likeCount}>55</Text>
+            <Text style={styles.likeCount}>{this.props.route.params.like}</Text>
             <AntDesign name="heart" size={20} color="black" />
           </View>
           <View
@@ -33,7 +35,7 @@ export default class PostScreen extends Component {
         <View style={styles.imageContainer}>
           <Image
             style={styles.photo}
-            source={require("../../assets/max.jpg")}
+            source={{uri:this.props.route.params.image}}
           />
         </View>
      

@@ -8,10 +8,11 @@ import SettingsScreen from "../screens/SettingsScreen";
 import DrawerContent from "../screens/DrawerContent";
 import UpdateProfile from "../screens/UpdateProfile";
 
+
+
 const Drawer = createDrawerNavigator();
 
 export default function MainContent({ navigation }, props) {
-  
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
@@ -19,10 +20,14 @@ export default function MainContent({ navigation }, props) {
     >
       <Drawer.Screen name="Home" component={MyTabs} {...props} />
       <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
-      <Drawer.Screen name="UpdateProfile" component={UpdateProfile}  {...props}/>
+      <Drawer.Screen
+        name="UpdateProfile"
+        component={UpdateProfile}
+        {...props}
+      />
+      <Drawer.Screen name="PostScreen" component={PostScreen} {...props} />
     </Drawer.Navigator>
   );
-  
 }
 
 const styles = StyleSheet.create({});

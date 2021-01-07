@@ -40,11 +40,44 @@ export default class ProfilePostFeed extends Component {
   }
   render() {
     return (
-      <View>
-        <Text> textInComponent </Text>
+      this.state.isLoading
+      ?
+      <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <ActivityIndicator size="large" color="black" />
+    </View>
+      :
+      
+      <View style={styles.feedContainer}>
+        <View>
+          <FlatList
+            data={Object.keys(this.state.dataSource)}
+            renderItem={({ item }) => (
+              <PostBanner
+                userId={this.state.dataSource[item].userId}
+                Info={this.state.dataSource[item].Info}
+                title={this.state.dataSource[item].title}
+                like={this.state.dataSource[item].likes}
+                time={this.state.dataSource[item].postTime}
+                image={this.state.dataSource[item].image}
+              ></PostBanner>
+            )}
+            numColumns={2}
+          ></FlatList>
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  feedContainer: {
+    flex: 1,
+  },
+});

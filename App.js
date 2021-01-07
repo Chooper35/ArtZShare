@@ -39,7 +39,7 @@ export default function App() {
   }
   
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator headerMode="screen">
         <Stack.Screen name="Login" component={LOGIN} options={{
           headerShown:false,

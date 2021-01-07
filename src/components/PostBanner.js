@@ -37,7 +37,18 @@ export default class Post extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={()=> {
+          RootNavigation.navigate("PostScreen",{
+            userId: this.props.userId,
+            Info:this.props.Info,
+            title:this.props.title,
+            like:this.props.like,
+            time:this.props.time,
+            image:this.props.image
+          }
+          
+          )
+        }} >
           <View style={styles.imageContainer}>
             <Image
               style={styles.photo}
