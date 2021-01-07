@@ -24,14 +24,14 @@ export default function DrawerContent(props) {
   var [photoURL, setPhotoURL] = useState("");
   var [followers, setFollower] = useState(0);
   var [follows, setFollows] = useState(0);
-  var [count,setCount]= useState(0);
 
   useEffect(() => {
-    firebase
+    var userId = firebase.auth().currentUser.uid;
+    const onValueChange = firebase
       .database()
-      .ref("/users/" + userId)
-      .once("value")
-      .then((snapshot) => {
+      .ref(`/users/${userId}`)
+      .on("value", (snapshot) => {
+        console.log("Snepşot" + snapshot.val());
         username = (snapshot.val() && snapshot.val().userName) || "Anonymous";
         name = (snapshot.val() && snapshot.val().name) || "Anonymous";
         pInfo = (snapshot.val() && snapshot.val().pInfo) || "Açıklama";
@@ -44,12 +44,10 @@ export default function DrawerContent(props) {
         setPhotoURL(photoURL);
         setFollower(followers);
         setFollows(follows);
-      }).then(function(){
-        firebase.auth().currentUser.reload()
-      }).catch(function(err){
-        console.log(err);
-      })
-  }, [count]);
+      });
+    return () =>
+      firebase.database().ref(`/users/${userId}`).off("value", onValueChange);
+  }, [userId]);
   function signO() {
     firebase
       .auth()
@@ -102,7 +100,7 @@ export default function DrawerContent(props) {
               label="Ana Ekran"
               onPress={() => {
                 props.navigation.navigate("HomeScreen");
-                setCount(count + 1);
+            
               }}
             />
             <DrawerItem
@@ -112,7 +110,7 @@ export default function DrawerContent(props) {
               label="Profil"
               onPress={() => {
                 props.navigation.navigate("Profile");
-                setCount(count + 1);
+          
               }}
             />
             <DrawerItem

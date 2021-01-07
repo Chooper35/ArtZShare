@@ -6,29 +6,42 @@ import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import * as RootNavigation from "../components/RootNavigation";
+import * as firebase from "firebase";
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
   }
   state = {
-    imageURL: "asd",
-    profilePURL: "ProfilePic",
-    kullaniciAdi: "@ayberkdzv",
-    begeniSayisi: 1,
+    profileURL: "",
+    userName: "",
+    length:0,
   };
 
-  showData = () => {
-    console.log("Data ===" + this.props.data);
-  };
+  componentDidMount(){
+    var userId = this.props.userId;
+    const onValueChange = firebase
+      .database()
+      .ref(`/users/${userId}`)
+      .on("value", (snapshot) => {    
+        username = (snapshot.val() && snapshot.val().userName) || "Anonymous"; 
+        photoURL = (snapshot.val() && snapshot.val().photoURL) || "Anonymous";
+        this.setState({
+          profileURL:photoURL,
+          userName:username
+
+        })
+      });
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.showData()}>
+        <TouchableOpacity >
           <View style={styles.imageContainer}>
             <Image
               style={styles.photo}
-              source={require("../../assets/bottas.jpg")}
+              source={this.props.image ? {uri: this.props.image} : null}
             />
           </View>
           <View
@@ -41,13 +54,13 @@ export default class Post extends Component {
 
           <View style={styles.userContainer}>
             <Image
-              source={require("../../assets/image2.jpg")}
+              source={this.state.profileURL ? {uri: this.state.profileURL } : null}
               style={styles.profilePic}
             ></Image>
 
-            <Text style={styles.userName}>{this.state.kullaniciAdi}</Text>
+            <Text style={styles.userName}>{this.state.userName}</Text>
             <View style={styles.likeContainer}>
-              <Text style={styles.likeCount}>{this.state.begeniSayisi}</Text>
+              <Text style={styles.likeCount}>{this.props.like}</Text>
               <AntDesign name="heart" size={15} color="black" />
             </View>
           </View>

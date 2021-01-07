@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, FlatList } from "react-native";
+import { Text, StyleSheet, View, FlatList, Image,ActivityIndicator } from "react-native";
 import PostBanner from "./PostBanner";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
 import * as firebase from "firebase";
+import Post from "./PostBanner";
 
 export default class PostFeed extends Component {
   constructor(props) {
@@ -9,36 +12,56 @@ export default class PostFeed extends Component {
   }
   state = {
     dataSource: [],
+    length:0,
+    isLoading:true,
   };
-
-  _renderPost() {
-    return <PostBanner data={this.state.dataSource}></PostBanner>;
-  }
-  _returnKey(item) {
-    return item.toString();
-  }
-
   componentDidMount() {
-    var postListRef=firebase.database().ref("posts").once("value").then((snapshot)=>{
-      console.log("Post Snapshot == "+ JSON.stringify(snapshot));
-      this.setState({
-        dataSource:JSON.stringify(snapshot),
-      })
-
-      console.log("DataSource ==="+JSON.stringify(this.state.dataSource));
-
-
-    })
+    var postListRef = firebase
+      .database()
+      .ref("posts")
+      .once("value")
+      .then((snapshot) => {
+        var length=snapshot.numChildren();
+        console.log("Uzunluk"+ length);
+        var data = snapshot.val();
+        this.setState({
+          dataSource: data,
+          isLoading:false,
+          length:length,
+        });
+      });
   }
 
   render() {
     return (
+      this.state.isLoading
+      ?
+      <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <ActivityIndicator size="large" color="black" />
+    </View>
+      :
+      
       <View style={styles.feedContainer}>
         <View>
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-            keyExtractor={this._returnKey}
-            renderItem={() => this._renderPost()}
+            data={Object.keys(this.state.dataSource)}
+            renderItem={({ item }) => (
+              <PostBanner
+                userId={this.state.dataSource[item].userId}
+                Info={this.state.dataSource[item].Info}
+                title={this.state.dataSource[item].title}
+                like={this.state.dataSource[item].likes}
+                time={this.state.dataSource[item].postTime}
+                image={this.state.dataSource[item].image}
+              ></PostBanner>
+            )}
             numColumns={2}
           ></FlatList>
         </View>
