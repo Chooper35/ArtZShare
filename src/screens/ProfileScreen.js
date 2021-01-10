@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useLayoutEffect, useState } from "react";
 import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
 import PostFeed from "../components/PostFeed";
+import ProfilePostFeed from "../components/ProfilePostFeed";
 import {
   MaterialCommunityIcons,
   AntDesign,
@@ -54,8 +55,8 @@ export default function ProfileScreen() {
           <Text>&#64;{username}</Text>
 
           <TouchableOpacity style={styles.followButton}>
-            <SimpleLineIcons name="user-follow" size={25} color="black" />
-            <Text>Yenile</Text>
+            <SimpleLineIcons name="user-follow" size={20} color="black" />
+            <Text>Follow</Text>
           </TouchableOpacity>
           <View style={styles.folContainer}>
             <View style={styles.littleFolContainer}>
@@ -92,7 +93,7 @@ export default function ProfileScreen() {
           }}
         />
       </View>
-      <PostFeed></PostFeed>
+      <ProfilePostFeed></ProfilePostFeed>
     </ScrollView>
   );
 }

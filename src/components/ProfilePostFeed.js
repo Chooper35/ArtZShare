@@ -21,39 +21,35 @@ export default class ProfilePostFeed extends Component {
     dataSource: [],
     isLoading: true,
   };
+
   componentDidMount() {
-    var userId=firebase.auth().currentUser.uid,
-    var postListRef = firebase
-      .database()
-      .ref("posts")
+    var userId = firebase.auth().currentUser.uid;
+    var ref = firebase.database().ref("posts");
+    ref
+      .orderByChild("userId")
+      .equalTo(userId)
       .once("value")
       .then((snapshot) => {
-        var length = snapshot.numChildren();
-        console.log("Uzunluk" + length);
         var data = snapshot.val();
         this.setState({
-          dataSource: data,
-          isLoading: false,
-          length: length,
-        });
+          dataSource:data,
+          isLoading:false,
+        })
       });
   }
   render() {
-    return (
-      this.state.isLoading
-      ?
+    return this.state.isLoading ? (
       <View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <ActivityIndicator size="large" color="black" />
-    </View>
-      :
-      
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    ) : (
       <View style={styles.feedContainer}>
         <View>
           <FlatList
