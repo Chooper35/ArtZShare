@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { TextInput } from 'react-native-paper';
+import * as firebase from 'firebase';
 
 
 export default function ForgotPasswordScreen({navigation}) {

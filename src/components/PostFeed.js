@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, FlatList, Image,ActivityIndicator } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import PostBanner from "./PostBanner";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
@@ -12,43 +19,53 @@ export default class PostFeed extends Component {
   }
   state = {
     dataSource: [],
-    length:0,
-    isLoading:true,
+    isLoading: true,
   };
   componentDidMount() {
-    var postListRef = firebase
+    firebase
       .database()
       .ref("posts")
       .once("value")
       .then((snapshot) => {
-        var length=snapshot.numChildren();
-        console.log("Uzunluk"+ length);
+        var length = snapshot.numChildren();
+        console.log("Uzunluk" + length);
         var data = snapshot.val();
         this.setState({
           dataSource: data,
-          isLoading:false,
-          length:length,
+          isLoading: false,
+          length: length,
         });
-        console.log(JSON.stringify(this.state.dataSource));
       });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.dataSource.length !== this.state.dataSource.length) {
+      firebase
+        .database()
+        .ref("posts")
+        .once("value")
+        .then((snapshot) => {
+          var data = snapshot.val();
+          this.setState({
+            dataSource: data,
+            isLoading: false,
+          });
+        });
+    }
   }
 
   render() {
-    return (
-      this.state.isLoading
-      ?
+    return this.state.isLoading ? (
       <View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <ActivityIndicator size="large" color="black" />
-    </View>
-      :
-      
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    ) : (
       <View style={styles.feedContainer}>
         <View>
           <FlatList

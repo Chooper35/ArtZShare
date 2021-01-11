@@ -41,6 +41,7 @@ export default class UpdateProfile extends Component {
     }
   };
   updateUser = () => {
+    var user = firebase.auth().currentUser;
     var userId = firebase.auth().currentUser.uid;
     console.log("ilk log" + JSON.stringify(userId));
     firebase
@@ -90,17 +91,15 @@ export default class UpdateProfile extends Component {
                   justifyContent: "center",
                 }}
               >
-                
                 <Image
                   source={{ uri: this.state.photoURL }}
                   style={{ width: 200, height: 200 }}
                 />
-               
               </View>
               <Button
-                  title="Pick an image from camera roll"
-                  onPress={this.pickImage}
-                />
+                title="Pick an image from camera roll"
+                onPress={this.pickImage}
+              />
             </View>
           </View>
         </View>
