@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { Searchbar } from "react-native-paper";
-import PostFeed from "../components/PostFeed";
-import TagContainer from "../components/TagContainer";
+import PostFeed from "../components/Feeds/PostFeed";
+import TagContainer from "../components/Feeds/TagContainer";
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class HomeScreen extends Component {
     return (
       <KeyboardAvoidingView style={styles.container}>
         <TagContainer></TagContainer>
-        <Searchbar placeholder="Search" style={styles.searchBar}></Searchbar>
+      
         <View
           style={{
             borderBottomColor: "purple",

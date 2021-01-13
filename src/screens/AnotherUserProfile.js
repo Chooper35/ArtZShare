@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useLayoutEffect, useState } from "react";
 import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
-
-import ProfilePostFeed from "../components/Feeds/ProfilePostFeed";
+import AnotherPostFeed from "../components/Feeds/AnotherPostFeed";
 import {
   MaterialCommunityIcons,
   AntDesign,
@@ -11,8 +10,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Menu, Divider, Provider } from "react-native-paper";
 import * as firebase from "firebase";
 
-export default function ProfileScreen() {
-  var userId = firebase.auth().currentUser.uid;
+export default function AnotherUserProfile(props) {
+  var userId = props.route.params.userId;
+  
   var [username, setUsername] = useState("");
   var [name, setName] = useState("");
   var [pInfo, setpInfo] = useState("");
@@ -21,7 +21,7 @@ export default function ProfileScreen() {
   var [follows, setFollows] = useState(0);
 
   useEffect(() => {
-    var userId = firebase.auth().currentUser.uid;
+    var userId = props.route.params.userId;
     const onValueChange = firebase
       .database()
       .ref(`/users/${userId}`)
@@ -47,8 +47,10 @@ export default function ProfileScreen() {
       <View style={styles.topContainer}>
         <View style={styles.picContainer}>
           <TouchableOpacity>
-            <Image style={styles.profilePic} source={photoURL ? {uri: photoURL} : null}></Image>
-            
+            <Image
+              style={styles.profilePic}
+              source={photoURL ? { uri: photoURL } : null}
+            ></Image>
           </TouchableOpacity>
 
           <Text>{name}</Text>
@@ -93,7 +95,8 @@ export default function ProfileScreen() {
           }}
         />
       </View>
-      <ProfilePostFeed></ProfilePostFeed>
+      <AnotherPostFeed 
+      userId={props.route.params.userId}></AnotherPostFeed>
     </ScrollView>
   );
 }

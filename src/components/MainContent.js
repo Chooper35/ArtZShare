@@ -7,6 +7,7 @@ import PostScreen from "../screens/PostScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import DrawerContent from "../screens/DrawerContent";
 import UpdateProfile from "../screens/UpdateProfile";
+import AnotherUserProfile from "../screens/AnotherUserProfile";
 
 
 
@@ -26,6 +27,7 @@ export default function MainContent({ navigation }, props) {
         {...props}
       />
       <Drawer.Screen name="PostScreen" component={PostScreen} {...props} />
+      <Drawer.Screen name="Another" component={AnotherUserProfile} {...props}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

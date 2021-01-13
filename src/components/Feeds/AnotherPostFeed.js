@@ -7,13 +7,13 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import PostBanner from "./PostBanner";
+import PostBanner from "../PostBanner";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import Post from "./PostBanner";
+import Post from "../PostBanner";
 
-export default class ProfilePostFeed extends Component {
+export default class AnotherPostFeed extends Component {
   constructor(props) {
     super(props);
   }
@@ -23,7 +23,7 @@ export default class ProfilePostFeed extends Component {
   };
 
   componentDidMount() {
-    var userId = firebase.auth().currentUser.uid;
+    var userId = this.props.userId;
     var ref = firebase.database().ref("posts");
     ref
       .orderByChild("userId")
@@ -37,23 +37,27 @@ export default class ProfilePostFeed extends Component {
         });
       });
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataSource.length !== this.state.dataSource.length) {
-      var userId = firebase.auth().currentUser.uid;
-      var ref =firebase.database().ref("posts");
-      ref
-        .orderByChild("userId")
-        .equalTo(userId)
-        .once("value")
-        .then((snapshot) => {
-          var data = snapshot.val();
-          this.setState({
-            dataSource: data,
-            isLoading: false,
-          });
-        });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   // var preValues = Object.values(prevState).length;
+  //   // var Values=Object.values(this.state.dataSource).length;
+  //   // console.log(preValues);
+  //   // console.log(Values);
+  //   if (prevState.length === this.state.dataSource.length) {
+  //     var userId = this.props.userId;
+  //     var ref = firebase.database().ref("posts");
+  //     ref
+  //       .orderByChild("userId")
+  //       .equalTo(userId)
+  //       .once("value")
+  //       .then((snapshot) => {
+  //         var data = snapshot.val();
+  //         this.setState({
+  //           dataSource: data,
+  //           isLoading: false,
+  //         });
+  //       });
+  //   }
+  // }
   render() {
     if (this.state.dataSource == null) {
       return (

@@ -4,25 +4,24 @@ import {
   StyleSheet,
   View,
   FlatList,
-  Image,
   ActivityIndicator,
 } from "react-native";
-import PostBanner from "./PostBanner";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { AntDesign } from "@expo/vector-icons";
+import PostScreen from "../../screens/PostScreen";
+import FollowerPost from "../FollowerPost";
+import Post from "../PostBanner";
 import * as firebase from "firebase";
-import Post from "./PostBanner";
 
-export default class PostFeed extends Component {
+export default class FollowerPostFeed extends Component {
   constructor(props) {
     super(props);
   }
   state = {
     dataSource: [],
+    length: 0,
     isLoading: true,
   };
   componentDidMount() {
-    firebase
+    var postListRef = firebase
       .database()
       .ref("posts")
       .once("value")
@@ -36,21 +35,6 @@ export default class PostFeed extends Component {
           length: length,
         });
       });
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataSource.length !== this.state.dataSource.length) {
-      firebase
-        .database()
-        .ref("posts")
-        .once("value")
-        .then((snapshot) => {
-          var data = snapshot.val();
-          this.setState({
-            dataSource: data,
-            isLoading: false,
-          });
-        });
-    }
   }
 
   render() {
@@ -71,16 +55,16 @@ export default class PostFeed extends Component {
           <FlatList
             data={Object.keys(this.state.dataSource)}
             renderItem={({ item }) => (
-              <PostBanner
+              <FollowerPost
                 userId={this.state.dataSource[item].userId}
                 Info={this.state.dataSource[item].Info}
                 title={this.state.dataSource[item].title}
                 like={this.state.dataSource[item].likes}
                 time={this.state.dataSource[item].postTime}
                 image={this.state.dataSource[item].image}
-              ></PostBanner>
+              ></FollowerPost>
             )}
-            numColumns={2}
+            numColumns={1}
           ></FlatList>
         </View>
       </View>
@@ -89,7 +73,5 @@ export default class PostFeed extends Component {
 }
 
 const styles = StyleSheet.create({
-  feedContainer: {
-    flex: 1,
-  },
+  feedContainer: {},
 });

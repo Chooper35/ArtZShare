@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View,FlatList } from "react-native";
-import Tag from "./Tag";
+import Tag from "../Tag";
 
 export default class TagContainer extends Component {
   _renderTag() {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, Image, Button } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import CommentFeed from "../components/CommentFeed";
+import CommentFeed from "../components/Feeds/CommentFeed";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 import moment from 'moment';

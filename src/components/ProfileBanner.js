@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import ProfileScreen from "../screens/ProfileScreen";
+import * as RootNavigation from "../components/RootNavigation";
 
 export default class ProfileBanner extends Component {
   constructor(props) {
@@ -8,7 +10,7 @@ export default class ProfileBanner extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>RootNavigation.navigate("Another",{userId:this.props.userId})}>
           <View style={styles.altContainer}>
             <Image
               style={styles.profilePic}

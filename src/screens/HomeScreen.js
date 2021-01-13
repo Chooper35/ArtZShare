@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import FollowerPostFeed from "../components/FollowerPostFeed";
+import FollowerPostFeed from "../components/Feeds/FollowerPostFeed";
 import ProfileBanner from "../components/ProfileBanner";
 import { Searchbar } from "react-native-paper";
 import * as firebase from "firebase";
@@ -66,7 +66,7 @@ export default class HomeScreen extends Component {
       </View>
     ) : (
       <View>
-        <Searchbar placeholder="Search"></Searchbar>
+        <Searchbar placeholder="Search" style={styles.searchBar}></Searchbar>
         <View>
           <FlatList
             data={Object.keys(this.state.dataSource)}
@@ -90,4 +90,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  searchBar:{
+    marginHorizontal:10,
+    marginVertical:5,
+  }
 });
