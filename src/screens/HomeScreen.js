@@ -10,6 +10,7 @@ import FollowerPostFeed from "../components/Feeds/FollowerPostFeed";
 import ProfileBanner from "../components/ProfileBanner";
 import { Searchbar } from "react-native-paper";
 import * as firebase from "firebase";
+var _ = require("lodash");
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -19,7 +20,23 @@ export default class HomeScreen extends Component {
   state = {
     dataSource: [],
     isLoading: true,
+    query: "",
+    fullData: [],
   };
+
+    
+ 
+  // handleSearch = (text) => {
+  //   const formatQuery = text.toLowerCase();
+  //   var arr=Object.values(this.state.fullData);
+  //   console.log("ARR"+ JSON.stringify(arr));
+  //   console.log("result"+result);
+  //   var result=arr.filter(el=>el.toLowerCase().indexOf(formatQuery.toLowerCase())!==-1)
+  //   this.setState({
+  //     query: formatQuery,
+  //     dataSource:result,
+  //   });
+  // };
 
   componentDidMount() {
     var userList = firebase
@@ -30,6 +47,7 @@ export default class HomeScreen extends Component {
         var data = snapshot.val();
         this.setState({
           dataSource: data,
+          fullData: data,
           isLoading: false,
         });
         console.log(JSON.stringify(data));
@@ -66,7 +84,10 @@ export default class HomeScreen extends Component {
       </View>
     ) : (
       <View>
-        <Searchbar placeholder="Search" style={styles.searchBar}></Searchbar>
+        <Searchbar
+          placeholder="Search"
+          style={styles.searchBar}
+        ></Searchbar>
         <View>
           <FlatList
             data={Object.keys(this.state.dataSource)}
@@ -90,8 +111,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  searchBar:{
-    marginHorizontal:10,
-    marginVertical:5,
-  }
+  searchBar: {
+    marginHorizontal: 10,
+    marginVertical: 5,
+  },
 });

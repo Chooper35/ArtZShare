@@ -29,6 +29,7 @@ export default class PostFeed extends Component {
         var length = snapshot.numChildren();
         console.log("Uzunluk" + length);
         var data = snapshot.val();
+        console.log("Brağağağa" + JSON.stringify(data));
         this.setState({
           dataSource: data,
           isLoading: false,
@@ -37,7 +38,6 @@ export default class PostFeed extends Component {
       });
   }
   componentDidUpdate(prevProps, prevState) {
-    
     if (prevState.dataSource !== this.state.dataSource) {
       firebase
         .database()
@@ -73,6 +73,7 @@ export default class PostFeed extends Component {
             renderItem={({ item }) => (
               <PostBanner
                 userId={this.state.dataSource[item].userId}
+                postId={item}
                 Info={this.state.dataSource[item].Info}
                 title={this.state.dataSource[item].title}
                 like={this.state.dataSource[item].likes}

@@ -4,23 +4,33 @@ import { AntDesign } from "@expo/vector-icons";
 import CommentFeed from "../components/Feeds/CommentFeed";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import * as firebase from "firebase";
-import moment from 'moment';
-
+import { FontAwesome } from "@expo/vector-icons";
+import moment from "moment";
 export default class PostScreen extends Component {
   constructor(props) {
     super(props);
   }
+
+  likePhoto = () => {
+    alert("You liked that photo" + this.props.route.params.userId);
+  };
   render() {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.userContainer}>
           <Image
-            source={{uri:this.props.route.params.profileURL}}
+            source={{ uri: this.props.route.params.profileURL }}
             style={styles.profilePic}
           ></Image>
+          <View>
+            <Text style={styles.userName}>
+              {this.props.route.params.userName}
+            </Text>
+            <Text style={styles.userName}>
+              {moment(this.props.route.params.time).fromNow()}
+            </Text>
+          </View>
 
-          <Text style={styles.userName}>{this.props.route.params.userName}</Text>
-          <Text style={styles.userName}>{moment(this.props.route.params.time).fromNow()}</Text>
           <View style={styles.likeContainer}>
             <Text style={styles.likeCount}>{this.props.route.params.like}</Text>
             <AntDesign name="heart" size={20} color="black" />
@@ -39,23 +49,41 @@ export default class PostScreen extends Component {
             source={{ uri: this.props.route.params.image }}
           />
         </View>
-        <View>
-          <Text>{this.props.route.params.title}</Text>
-          <View
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => this.likePhoto()}>
+            <AntDesign
+              name="heart"
+              size={25}
+              color="black"
+              style={styles.button}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <FontAwesome
+              name="comments"
+              size={25}
+              color="black"
+              style={styles.button}
+            />
+          </TouchableOpacity>
+        </View>
+        <View
           style={{
             margin: 5,
-            borderBottomColor: "black",
-            borderBottomWidth: 1,
+            borderBottomColor: "gray",
+            borderBottomWidth: 0.5,
           }}
         />
+        <View style={styles.InfoContainer}>
+          <Text style={styles.title}>{this.props.route.params.title}</Text>
           <Text>{this.props.route.params.Info}</Text>
         </View>
 
         <View
           style={{
             margin: 5,
-            borderBottomColor: "black",
-            borderBottomWidth: 1,
+            borderBottomColor: "gray",
+            borderBottomWidth: 0.5,
           }}
         />
         <View>
@@ -106,5 +134,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 50,
     height: 50,
+  },
+  buttonContainer: {
+    alignContent: "space-around",
+    flexDirection: "row",
+  },
+  button: {
+    marginRight: 15,
+  },
+  title: {
+    alignItems: "center",
+    fontSize: 20,
+  },
+  InfoContainer: {
+    alignItems: "center",
   },
 });

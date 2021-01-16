@@ -47,27 +47,24 @@ export default function ProfileScreen() {
       <View style={styles.topContainer}>
         <View style={styles.picContainer}>
           <TouchableOpacity>
-            <Image style={styles.profilePic} source={photoURL ? {uri: photoURL} : null}></Image>
-            
+            <Image
+              style={styles.profilePic}
+              source={photoURL ? { uri: photoURL } : null}
+            ></Image>
           </TouchableOpacity>
 
           <Text>{name}</Text>
           <Text>&#64;{username}</Text>
-
-          <TouchableOpacity style={styles.followButton}>
-            <SimpleLineIcons name="user-follow" size={20} color="black" />
-            <Text>Follow</Text>
-          </TouchableOpacity>
           <View style={styles.folContainer}>
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
-              <Text>Following</Text>
-              <Text>{follows}</Text>
+              <Text style={styles.textStyle}>Following</Text>
+              <Text style={styles.textStyle}>{follows}</Text>
             </View>
             <View style={styles.littleFolContainer}>
               <AntDesign name="user" size={24} color="black" />
-              <Text>Followers</Text>
-              <Text>{followers}</Text>
+              <Text style={styles.textStyle}>Followers</Text>
+              <Text style={styles.textStyle}>{followers}</Text>
             </View>
           </View>
         </View>
@@ -149,4 +146,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     textAlign: "center",
   },
+  textStyle:{
+    fontSize:13,
+  }
 });

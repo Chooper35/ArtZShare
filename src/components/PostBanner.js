@@ -46,7 +46,8 @@ export default class Post extends Component {
             title:this.props.title,
             like:this.props.like,
             time:this.props.time,
-            image:this.props.image
+            image:this.props.image,
+            postId:this.props.postId,
           }
           
           )
