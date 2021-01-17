@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { Component, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MyTabs from "../components/MyTabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -8,22 +9,35 @@ import SettingsScreen from "../screens/SettingsScreen";
 import DrawerContent from "../screens/DrawerContent";
 import UpdateProfile from "../screens/UpdateProfile";
 import AnotherUserProfile from "../screens/AnotherUserProfile";
+import UpdatePassword from "../screens/UpdatePassword";
+import UpdateEmail from "../screens/UpdateEmail";
 
 
 
 const Drawer = createDrawerNavigator();
 
 export default function MainContent({ navigation }, props) {
+  
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
       initialRouteName="Home"
     >
-      <Drawer.Screen name="Home" component={MyTabs} {...props} />
+      <Drawer.Screen name="Home" component={MyTabs}  {...props} />
       <Drawer.Screen name="Settings" component={SettingsScreen} {...props} />
       <Drawer.Screen
         name="UpdateProfile"
         component={UpdateProfile}
+        {...props}
+      />
+      <Drawer.Screen
+        name="UpdatePassword"
+        component={UpdatePassword}
+        {...props}
+      />
+       <Drawer.Screen
+        name="UpdateEmail"
+        component={UpdateEmail}
         {...props}
       />
       <Drawer.Screen name="PostScreen" component={PostScreen} {...props} />

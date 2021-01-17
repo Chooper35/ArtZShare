@@ -25,6 +25,8 @@ export default class UpdateProfile extends Component {
     userName: "",
     photoURL: "",
     pInfo: "",
+    email: "",
+    password: "",
   };
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -40,6 +42,21 @@ export default class UpdateProfile extends Component {
       });
     }
   };
+
+  componentDidMount() {
+    var userId = firebase.auth().currentUser.uid;
+    firebase
+      .database()
+      .ref(`/users/${userId}`)
+      .on("value", (snapshot) => {
+        this.setState({
+          name: (snapshot.val() && snapshot.val().name) || "Anonymous",
+          userName: (snapshot.val() && snapshot.val().userName) || "Anonymous",
+          pInfo: (snapshot.val() && snapshot.val().pInfo) || "Açıklama",
+          photoURL: (snapshot.val() && snapshot.val().photoURL) || "Anonymous",
+        });
+      });
+  }
   updateUser = () => {
     var user = firebase.auth().currentUser;
     var userId = firebase.auth().currentUser.uid;
@@ -55,7 +72,6 @@ export default class UpdateProfile extends Component {
         pInfo: this.state.pInfo,
       })
       .then(function () {
-        firebase.auth().currentUser.reload();
         alert("Başarıyla güncellendi.");
       })
       .catch(function (err) {
@@ -96,10 +112,7 @@ export default class UpdateProfile extends Component {
                   style={{ width: 200, height: 200 }}
                 />
               </View>
-              <Button
-                title="Pick an image from camera roll"
-                onPress={this.pickImage}
-              />
+              <Button title="Pick an image" onPress={this.pickImage} />
             </View>
           </View>
         </View>
@@ -122,6 +135,24 @@ export default class UpdateProfile extends Component {
             value={this.state.userName}
           />
         </View>
+        {/* <View style={styles.action}>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#666666"
+            autoCorrect={false}
+            onChangeText={(email) => this.setState({ email: email })}
+            value={this.state.email}
+          />
+        </View>
+        <View style={styles.action}>
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor="#666666"
+            autoCorrect={false}
+            onChangeText={(password) => this.setState({ password: password })}
+            value={this.state.password}
+          />
+        </View> */}
         <View style={styles.action}>
           <TextInput
             placeholder="Bio"
@@ -147,16 +178,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   commandButton: {
-    padding: 15,
+    padding: 5,
     borderRadius: 10,
-    backgroundColor: "blue",
+    backgroundColor: "gray",
     alignItems: "center",
-    marginTop: 10,
+    margin: 10,
   },
   panelButtonTitle: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
   },
   action: {
     marginTop: 5,

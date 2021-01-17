@@ -36,24 +36,33 @@ export default class ProfilePostFeed extends Component {
           isLoading: false,
         });
       });
+      this.forceUpdate();
   }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataSource.length !== this.state.dataSource.length) {
-      var userId = firebase.auth().currentUser.uid;
-      var ref = firebase.database().ref("posts");
-      ref
-        .orderByChild("userId")
-        .equalTo(userId)
-        .once("value")
-        .then((snapshot) => {
-          var data = snapshot.val();
-          this.setState({
-            dataSource: data,
-            isLoading: false,
-          });
-        });
-    }
+    console.log("a");
+    console.log(JSON.stringify(prevState.dataSource));
+    console.log(JSON.stringify(this.state.dataSource));
+     console.log(Object.is(JSON.stringify(prevState.dataSource),JSON.stringify(this.state.dataSource)));
+
+     if (Object.is(JSON.stringify(prevState.dataSource),JSON.stringify(this.state.dataSource))==false) {
+     
+     var userId = firebase.auth().currentUser.uid;
+     var ref = firebase.database().ref("posts");
+     ref
+       .orderByChild("userId")
+       .equalTo(userId)
+       .once("value")
+       .then((snapshot) => {
+         var data = snapshot.val();
+         this.setState({
+           dataSource: data,
+           isLoading: false,
+         });
+       });
   }
+}
+
   render() {
     if (this.state.dataSource == null) {
       return (

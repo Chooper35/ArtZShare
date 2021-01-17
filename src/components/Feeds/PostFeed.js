@@ -38,54 +38,70 @@ export default class PostFeed extends Component {
       });
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataSource !== this.state.dataSource) {
-      firebase
-        .database()
-        .ref("posts")
-        .once("value")
-        .then((snapshot) => {
-          var data = snapshot.val();
-          this.setState({
-            dataSource: data,
-            isLoading: false,
-          });
+    firebase
+      .database()
+      .ref("posts")
+      .once("value")
+      .then((snapshot) => {
+        var data = snapshot.val();
+        this.setState({
+          dataSource: data,
+          isLoading: false,
         });
-    }
+      });
   }
 
   render() {
-    return this.state.isLoading ? (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color="black" />
-      </View>
-    ) : (
-      <View style={styles.feedContainer}>
-        <View>
-          <FlatList
-            data={Object.keys(this.state.dataSource)}
-            renderItem={({ item }) => (
-              <PostBanner
-                userId={this.state.dataSource[item].userId}
-                postId={item}
-                Info={this.state.dataSource[item].Info}
-                title={this.state.dataSource[item].title}
-                like={this.state.dataSource[item].likes}
-                time={this.state.dataSource[item].postTime}
-                image={this.state.dataSource[item].image}
-              ></PostBanner>
-            )}
-            numColumns={2}
-          ></FlatList>
+    if (this.state.dataSource == null) {
+      return (
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 20,
+            }}
+          >
+            There is nothing :(
+          </Text>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return this.state.isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="black" />
+        </View>
+      ) : (
+        <View style={styles.feedContainer}>
+          <View>
+            <FlatList
+              data={Object.keys(this.state.dataSource)}
+              renderItem={({ item }) => (
+                <PostBanner
+                  userId={this.state.dataSource[item].userId}
+                  postId={item}
+                  Info={this.state.dataSource[item].Info}
+                  title={this.state.dataSource[item].title}
+                  like={this.state.dataSource[item].likes}
+                  time={this.state.dataSource[item].postTime}
+                  image={this.state.dataSource[item].image}
+                ></PostBanner>
+              )}
+              numColumns={2}
+            ></FlatList>
+          </View>
+        </View>
+      );
+    }
   }
 }
 

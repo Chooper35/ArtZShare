@@ -8,58 +8,72 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from "react-native";
-import { TextInput } from 'react-native-paper';
-import * as firebase from 'firebase';
+import { TextInput } from "react-native-paper";
+import * as firebase from "firebase";
 
+export default class ForgotPasswordScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default function ForgotPasswordScreen({navigation}) {
-  return (
-    <KeyboardAvoidingView style={styles.container}>
-         <ImageBackground
-        source={require("../../assets/flowers.jpg")}
-        style={styles.image}
-      >
-        <View style={styles.altContainer}>
+  state = {
+    email: "",
+  };
 
-        
-        <Image
-          style={styles.tinyLogo}
-          source={require("../../assets/key.png")}
-        />
-        <Text style={styles.textTitle}>FORGOT YOUR PASSWORD?</Text>
-        <Text style={styles.textBody}>Enter your email address</Text>
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Your Email"
-          placeholderTextColor="#808080"
-          autoCapitalize="none"
-        />
-
-        <TouchableOpacity
-          style={styles.submitButton}
+  forgotPassword = () => {
+    firebase.auth().sendPasswordResetEmail(this.state.email)
+      .then(function () {
+        alert('Please check your email...')
+      }).catch(function (e) {
+        console.log(e)
+      })
+  }
+  render() {
+    return (
+      <KeyboardAvoidingView style={styles.container}>
+        <ImageBackground
+          source={require("../../assets/flowers.jpg")}
+          style={styles.image}
         >
-          <Text style={styles.submitButtonText}> Submit </Text>
-        </TouchableOpacity>
-        </View>
-        </ImageBackground>
+          <View style={styles.altContainer}>
+            <Image
+              style={styles.tinyLogo}
+              source={require("../../assets/key.png")}
+            />
+            <Text style={styles.textTitle}>FORGOT YOUR PASSWORD?</Text>
+            <Text style={styles.textBody}>Enter your email address</Text>
+            <TextInput
+              style={styles.input}
+              underlineColorAndroid="transparent"
+              placeholder="Your Email"
+              placeholderTextColor="#808080"
+              autoCapitalize="none"
+              onChangeText={(email) => this.setState({ email: email })}
+              value={this.state.email}
+            />
 
+            <TouchableOpacity style={styles.submitButton} onPress={()=>this.forgotPassword()}>
+              <Text style={styles.submitButtonText}> Submit </Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </KeyboardAvoidingView>
-  )
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:"column",
+    flexDirection: "column",
     backgroundColor: "#00BFFF",
   },
-  altContainer:{
-    alignItems:"center",
-    backgroundColor: 'rgba(138, 151, 255, 0.4)',
-    padding:30,
-    margin:20,
-    borderRadius:10,
+  altContainer: {
+    alignItems: "center",
+    backgroundColor: "rgba(138, 151, 255, 0.4)",
+    padding: 30,
+    margin: 20,
+    borderRadius: 10,
   },
   textTitle: {
     fontStyle: "normal",
@@ -72,8 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
-    alignItems:"center",
-    opacity:0.9,
+    alignItems: "center",
+    opacity: 0.9,
   },
   tinyLogo: {
     width: 200,
@@ -85,11 +99,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
   },
-  
+
   input: {
-    width:300,
-    margin:5,
-    height:50,
+    width: 300,
+    margin: 5,
+    height: 50,
   },
   submitButton: {
     marginVertical: 20,
@@ -98,7 +112,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
     borderRadius: 50,
     borderColor: "black",
-    backgroundColor:"#E7E1FA",
+    backgroundColor: "#E7E1FA",
   },
   submitButtonText: {
     textAlign: "center",

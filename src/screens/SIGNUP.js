@@ -44,7 +44,7 @@ export default class SIGNUP extends Component {
         alert("Başarıyla kayıt olundu.")
       })
       .catch((err) => {
-        alert("Kayıt olunamadı.");
+        alert(err);
         console.log(err);
       
       });
@@ -58,8 +58,9 @@ export default class SIGNUP extends Component {
       password: this.state.password,
       photoURL:"",
       pInfo:"",
-      follower:0,
-      follows:0,
+      follower:[],
+      follows:[],
+      likedPhotos:[],
     });
   };
 

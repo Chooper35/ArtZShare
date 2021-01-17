@@ -17,8 +17,6 @@ export default class UploadScreen extends Component {
     image: null,
     title: "",
     Info: "",
-    likes: 0,
-    comments: null,
   };
   componentDidMount() {
     async () => {
@@ -59,9 +57,9 @@ export default class UploadScreen extends Component {
       .set({
         userId: userId,
         title: this.state.title,
-        likes: this.state.likes,
+
         image: this.state.image,
-        comments: this.state.comments,
+
         Info: this.state.Info,
         postTime: firebase.database.ServerValue.TIMESTAMP,
       })
