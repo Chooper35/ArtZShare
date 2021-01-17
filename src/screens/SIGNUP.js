@@ -84,6 +84,7 @@ export default class SIGNUP extends Component {
               placeholderTextColor="#808080"
               onChangeText={(name) => this.setState({ name: name })}
               value={this.state.name}
+              maxLength={20}
             />
             <TextInput
               style={styles.textInput}
@@ -92,6 +93,7 @@ export default class SIGNUP extends Component {
               placeholderTextColor="#808080"
               onChangeText={(userName) => this.setState({ userName: userName })}
               value={this.state.userName}
+              maxLength={15}
             />
             <TextInput
               style={styles.textInput}

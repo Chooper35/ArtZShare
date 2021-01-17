@@ -55,7 +55,7 @@ export default class HomeScreen extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataSource.lenght != this.state.dataSource.length) {
+    if (prevState.dataSource.length != this.state.dataSource.length) {
       var userList = firebase
         .database()
         .ref("users")
