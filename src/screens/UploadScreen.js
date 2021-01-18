@@ -57,8 +57,10 @@ export default class UploadScreen extends Component {
       .set({
         userId: userId,
         title: this.state.title,
+        postId: newPostKey,
 
         image: this.state.image,
+        like: 0,
 
         Info: this.state.Info,
         postTime: firebase.database.ServerValue.TIMESTAMP,

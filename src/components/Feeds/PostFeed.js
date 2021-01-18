@@ -29,7 +29,8 @@ export default class PostFeed extends Component {
         var length = snapshot.numChildren();
         console.log("Uzunluk" + length);
         var data = snapshot.val();
-        console.log("Brağağağa" + JSON.stringify(data));
+        console.log("Data" + JSON.stringify(data));
+   
         this.setState({
           dataSource: data,
           isLoading: false,
@@ -91,7 +92,7 @@ export default class PostFeed extends Component {
                   postId={item}
                   Info={this.state.dataSource[item].Info}
                   title={this.state.dataSource[item].title}
-                  like={this.state.dataSource[item].likes}
+                  like={this.state.dataSource[item].like}
                   time={this.state.dataSource[item].postTime}
                   image={this.state.dataSource[item].image}
                 ></PostBanner>

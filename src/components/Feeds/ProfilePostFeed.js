@@ -102,7 +102,7 @@ export default class ProfilePostFeed extends Component {
                   userId={this.state.dataSource[item].userId}
                   Info={this.state.dataSource[item].Info}
                   title={this.state.dataSource[item].title}
-                  like={this.state.dataSource[item].likes}
+                  like={this.state.dataSource[item].like}
                   time={this.state.dataSource[item].postTime}
                   image={this.state.dataSource[item].image}
                 ></PostBanner>
