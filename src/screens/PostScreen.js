@@ -15,36 +15,14 @@ export default class PostScreen extends Component {
     like: this.props.route.params.like,
   };
 
-  getLike = () => {
-    var postId = this.props.route.params.postId;
-    var likeCountRef = firebase.database().ref("posts/" + postId);
-    likeCountRef.once("value").then((snapshot) => {
-      console.log("Sinep" + snapshot.val().like);
-      this.setState({
-        like: snapshot.val().like,
-      });
-    });
-  };
 
-  componentDidMount() {
-    this.getLike();
-  }
+  
 
-  likePhoto = () => {
-    var postId = this.props.route.params.postId;
-    console.log(this.state.like);
-    var likeCountRef = firebase.database().ref("posts/" + postId);
-    likeCountRef.update({
-      like: this.state.like + 1,
-    });
-    alert("You liked that photo" + this.props.route.params.postId);
-  };
+  // likePhoto = () => {
+  //   alert("You liked that photo" + this.props.route.params.postId);
+  // };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.like !== this.state.like) {
-      this.getLike();
-    }
-  }
+
   render() {
     return (
       <ScrollView style={styles.container}>

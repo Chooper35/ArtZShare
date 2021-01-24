@@ -25,6 +25,7 @@ export default class ForgotPasswordScreen extends Component {
       .then(function () {
         alert('Please check your email...')
       }).catch(function (e) {
+        alert(e);
         console.log(e)
       })
   }
