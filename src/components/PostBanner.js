@@ -16,6 +16,7 @@ export default class Post extends Component {
     profileURL: "",
     userName: "",
     length:0,
+    deneme:0,
   };
 
   componentDidMount(){
